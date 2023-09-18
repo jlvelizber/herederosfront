@@ -21,3 +21,4 @@ export interface AuthStateContextInterface {
   doLogout: () => void;
   doCheking: () => void;
 }
+

@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Box, Button, Menu, MenuItem, IconButton } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import AdbIcon from "@mui/icons-material/Adb";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -28,15 +27,10 @@ const pages = [
 export const TopBar = () => {
   const { doLogout } = useContext(AuthContext) as AuthStateContextInterface;
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
-  //   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null);
-
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
-  //   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-  //     setAnchorElUser(event.currentTarget);
-  //   };
-
+ 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };

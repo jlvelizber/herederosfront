@@ -9,6 +9,7 @@ import {
 import { AuthContext } from "./contexts";
 import { AuthStateContextInterface } from "./interfaces";
 import { useAuth } from "./hooks";
+import { RegisterKidAppProvider } from "./providers/RegisterKidAppProvider";
 
 function App() {
   const { status } = useContext(AuthContext) as AuthStateContextInterface;
@@ -23,21 +24,23 @@ function App() {
   }
 
   return (
-    <Routes>
-      {status === "no-authenticated" ? (
-        <>
-          <Route path="/auth/*" element={<LoginPage />} />
-          <Route path="/*" element={<Navigate to="/auth/login" />} />
-        </>
-      ) : (
-        <>
-          <Route path="/" element={<RegisterAsistencePage />} />
-          <Route path="/listado" element={<ListKidPage />} />
-          <Route path="/reportes" element={<ReporterPage />} />
-          <Route path="/*" element={<Navigate to="/" />} />
-        </>
-      )}
-    </Routes>
+    <RegisterKidAppProvider>
+      <Routes>
+        {status === "no-authenticated" ? (
+          <>
+            <Route path="/auth/*" element={<LoginPage />} />
+            <Route path="/*" element={<Navigate to="/auth/login" />} />
+          </>
+        ) : (
+          <>
+            <Route path="/" element={<RegisterAsistencePage />} />
+            <Route path="/listado" element={<ListKidPage />} />
+            <Route path="/reportes" element={<ReporterPage />} />
+            <Route path="/*" element={<Navigate to="/" />} />
+          </>
+        )}
+      </Routes>
+    </RegisterKidAppProvider>
   );
 }
 
