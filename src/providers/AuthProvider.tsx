@@ -10,6 +10,7 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
     setStatus("authenticated");
   };
   const doLogout = () => {
+    localStorage.clear();
     setStatus("no-authenticated");
   };
   const doCheking = () => {

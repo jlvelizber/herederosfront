@@ -1,15 +1,17 @@
-import Typography from "@mui/material/Typography";
+import { useContext } from "react";
 import { AppLayout } from "../../layouts";
-import { CampusLIst, ServiceList } from "../../components";
+import { BeginRegisterAsistence } from "../../components";
+import { RegisterKidAppContext } from "../../contexts";
+import { RegisterKidAppInterfaceContext } from "../../interfaces";
 
 export const RegisterAsistencePage = () => {
+  const { isRegisterInitiated } = useContext(
+    RegisterKidAppContext
+  ) as RegisterKidAppInterfaceContext;
+
   return (
     <AppLayout>
-      <Typography variant="h5" noWrap>
-        Seleccione el campus
-      </Typography>
-      <CampusLIst />
-      <ServiceList />
+      {!isRegisterInitiated ? <BeginRegisterAsistence /> : <h1>Hollaaaaaa</h1>}
     </AppLayout>
   );
 };

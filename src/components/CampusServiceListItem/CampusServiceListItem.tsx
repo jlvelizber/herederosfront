@@ -1,18 +1,28 @@
-import { FC } from "react";
+import { FC, useContext } from "react";
 import Button from "@mui/material/Button";
-import { CampusServicesInterface } from "../../interfaces";
+import {
+  CampusServicesInterface,
+  RegisterKidAppInterfaceContext,
+} from "../../interfaces";
+import { RegisterKidAppContext } from "../../contexts";
 
-export const CampusServiceListItem: FC<{ service: CampusServicesInterface }> = ({
-  service,
-}) => {
-  //   const { getListServices } = useServices();
+export const CampusServiceListItem: FC<{
+  service: CampusServicesInterface;
+}> = ({ service }) => {
+  const { setServiceSelected } = useContext(
+    RegisterKidAppContext
+  ) as RegisterKidAppInterfaceContext;
 
-  //   const loadServices = async () => {
-  //     await getListServices(campus.id);
-  //   };
+  const handleCampusSelected = () => {
+    setServiceSelected(service.id);
+  };
 
   return (
-    <Button size="large" aria-label="large button group">
+    <Button
+      size="large"
+      aria-label="large button group"
+      onClick={handleCampusSelected}
+    >
       <p className="md:text-xl text-md font-bold">{service.description}</p>
     </Button>
   );

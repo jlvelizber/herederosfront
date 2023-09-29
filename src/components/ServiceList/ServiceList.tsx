@@ -12,12 +12,10 @@ export const ServiceList = () => {
     RegisterKidAppContext
   ) as RegisterKidAppInterfaceContext;
 
-  if (listServices.length === 0) return "Cargando";
-  console.log(listServices);
   return (
     <div className="w-full flex justify-around py-3">
       <ButtonGroup size="large" aria-label="large button group">
-        {listServices.map((service: CampusServicesInterface, key: number) => (
+        {listServices?.map((service: CampusServicesInterface, key: number) => (
           <CampusServiceListItem service={service} key={key} />
         ))}
       </ButtonGroup>
