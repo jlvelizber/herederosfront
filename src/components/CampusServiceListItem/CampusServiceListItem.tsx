@@ -14,7 +14,7 @@ export const CampusServiceListItem: FC<{
   ) as RegisterKidAppInterfaceContext;
 
   const handleCampusSelected = () => {
-    setServiceSelected(service.id);
+    setServiceSelected(service);
   };
 
   return (

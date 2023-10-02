@@ -6,14 +6,17 @@ import { RegisterKidAppContext } from "../../contexts";
 import { RegisterKidAppInterfaceContext } from "../../interfaces";
 
 export const BeginRegisterAsistence = () => {
-  const { serviceSelected, setIsRegisterInitiated } = useContext(
-    RegisterKidAppContext
-  ) as RegisterKidAppInterfaceContext;
+  const { serviceSelected, campusSelected, setIsRegisterInitiated } =
+    useContext(RegisterKidAppContext) as RegisterKidAppInterfaceContext;
 
   const beginRegister = () => {
     localStorage.setItem(
       "kidRegister",
-      JSON.stringify({ status: "open", serviceId: serviceSelected })
+      JSON.stringify({
+        status: "open",
+        service: serviceSelected,
+        campus: campusSelected,
+      })
     );
     setIsRegisterInitiated(true);
   };

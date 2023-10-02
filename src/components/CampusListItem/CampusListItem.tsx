@@ -10,7 +10,7 @@ import { RegisterKidAppContext } from "../../contexts";
 export const CampusListItem: FC<{
   campus: CampusInterface;
   disabled: boolean;
-  onChangeCampus: (value: number) => void;
+  onChangeCampus: (value: CampusInterface) => void;
 }> = ({ campus, disabled, onChangeCampus }) => {
   const { getListServices } = useServices();
   const { setServiceSelected } = useContext(
@@ -19,7 +19,7 @@ export const CampusListItem: FC<{
 
   const loadServices = async () => {
     setServiceSelected(null);
-    onChangeCampus(campus.id);
+    onChangeCampus(campus);
     await getListServices(campus.id);
   };
 

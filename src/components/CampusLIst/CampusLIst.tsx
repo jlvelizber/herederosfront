@@ -1,4 +1,4 @@
-import { useEffect, useContext, useState } from "react";
+import { useEffect, useContext } from "react";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import { useCampus } from "../../hooks";
 import {
@@ -9,7 +9,9 @@ import { RegisterKidAppContext } from "../../contexts";
 import { CampusListItem } from "..";
 
 export const CampusLIst = () => {
-  const [campusSelected, setCampusSeleted] = useState<number | null>(null);
+  const { setCampusSelected, campusSelected } = useContext(
+    RegisterKidAppContext
+  ) as RegisterKidAppInterfaceContext;
 
   const { listCampus } = useContext(
     RegisterKidAppContext
@@ -28,8 +30,10 @@ export const CampusLIst = () => {
           <CampusListItem
             campus={campus}
             key={key}
-            disabled={campusSelected === campus.id}
-            onChangeCampus={(value) => setCampusSeleted(value)}
+            disabled={campusSelected?.id === campus.id}
+            onChangeCampus={(value: CampusInterface) =>
+              setCampusSelected(value)
+            }
           />
         ))}
       </ButtonGroup>
