@@ -36,6 +36,34 @@ export const RegisterKidAppProvider: FC<{ children: ReactNode }> = ({
    * Query Kids
    */
   const [listQueryKids, setListQueryKids] = useState<KidInterface[]>([]);
+  const [existAnyResultQueryKids, setExistAnyResultQueryKids] =
+    useState<boolean>(false);
+
+  /**
+   *List Kids in Register Kids
+   */
+
+  const [listRegisterKids, setListRegisterKids] = useState<KidInterface[]>([]);
+
+  /**
+   * In chagrge open modal for new register kids
+   */
+  const [gonnaRegisterNewKid, setGonnaRegisterNewKid] =
+    useState<boolean>(false);
+
+  const addKIdToRegisterKids = (kid: KidInterface) => {
+    setListRegisterKids((prevState) => [...prevState, kid]);
+  };
+
+  const removeKIdToRegisterKids = (kid: KidInterface) => {
+    const copyKidsReistereds = [...listRegisterKids];
+
+    const newListKidsRegistereds = copyKidsReistereds.filter(
+      (kidInList: KidInterface) => kidInList.id !== kid.id
+    );
+
+    setListRegisterKids(newListKidsRegistereds);
+  };
 
   useEffect(() => {
     if (!isRegisterInitiated) {
@@ -43,7 +71,6 @@ export const RegisterKidAppProvider: FC<{ children: ReactNode }> = ({
       if (existRegister) {
         const registerData = JSON.parse(existRegister);
         setIsRegisterInitiated(true);
-        console.log(registerData);
         setCampusSelected(registerData?.campus);
         setServiceSelected(registerData?.service);
       }
@@ -65,6 +92,14 @@ export const RegisterKidAppProvider: FC<{ children: ReactNode }> = ({
         setCampusSelected,
         listQueryKids,
         setListQueryKids,
+        existAnyResultQueryKids,
+        setExistAnyResultQueryKids,
+        listRegisterKids,
+        setListRegisterKids,
+        addKIdToRegisterKids,
+        removeKIdToRegisterKids,
+        gonnaRegisterNewKid,
+        setGonnaRegisterNewKid,
       }}
     >
       {children}

@@ -16,4 +16,12 @@ export interface RegisterKidAppInterfaceContext {
   setIsRegisterInitiated: Dispatch<React.SetStateAction<boolean>>;
   listQueryKids: KidInterface[];
   setListQueryKids: Dispatch<React.SetStateAction<KidInterface[]>>;
+  existAnyResultQueryKids: boolean;
+  setExistAnyResultQueryKids: Dispatch<React.SetStateAction<boolean>>;
+  listRegisterKids: KidInterface[];
+  setListRegisterKids: Dispatch<React.SetStateAction<KidInterface[]>>;
+  addKIdToRegisterKids: (kid: KidInterface) => void;
+  removeKIdToRegisterKids: (kid: KidInterface) => void;
+  gonnaRegisterNewKid: boolean;
+  setGonnaRegisterNewKid: Dispatch<React.SetStateAction<boolean>>;
 }
