@@ -1,4 +1,4 @@
-import React, { FC, useContext, useState, ChangeEvent, FormEvent } from "react";
+import { FC, useContext, useState, ChangeEvent, FormEvent } from "react";
 import { KidInterface, RegisterKidAppInterfaceContext } from "../../interfaces";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";

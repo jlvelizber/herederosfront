@@ -1,4 +1,4 @@
-import React, { FC, useContext } from "react";
+import { FC, useContext } from "react";
 import { KidInterface, RegisterKidAppInterfaceContext } from "../../interfaces";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
@@ -36,8 +36,6 @@ export const ModalDataKidResults: FC<{
   };
 
   const handleSelectKid = async (kid: KidInterface) => {
-   
-
     const kidRegister = localStorage.getItem("kidRegister");
 
     if (kidRegister) {

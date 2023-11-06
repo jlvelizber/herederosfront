@@ -1,4 +1,4 @@
-import React, { useState, ChangeEvent, KeyboardEvent } from "react";
+import { useState, ChangeEvent, KeyboardEvent } from "react";
 import { TextField } from "@mui/material";
 import { useKidRegister } from "../../hooks";
 
@@ -15,7 +15,7 @@ export const SeekerKidBar = () => {
     if (event.keyCode === 13) {
       event.preventDefault();
       event.stopPropagation();
-      await findKids(valueSeeker)
+      await findKids(valueSeeker);
     }
   };
 
