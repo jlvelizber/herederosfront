@@ -37,6 +37,7 @@ export const TableListKids: FC<{
       <TableBody>
         {kids.map((kid: KidInterface, key: Key) => (
           <TableRow key={key}>
+            <TableCell>{`${key as number + 1}`}</TableCell>
             <TableCell>{`${kid.name} ${kid.lastname}`}</TableCell>
             <TableCell>{` ${getYearOldKid(kid.date_born)} año(s) `}</TableCell>
             <TableCell>{` ${kid.parent_name} ${kid.parent_lastname} `}</TableCell>
