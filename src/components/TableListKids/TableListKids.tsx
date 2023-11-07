@@ -21,6 +21,9 @@ export const TableListKids: FC<{
       <TableHead>
         <TableRow>
           <TableCell>
+            <span className="font-bold"> #</span>
+          </TableCell>
+          <TableCell>
             <span className="font-bold"> Niño</span>
           </TableCell>
           <TableCell>
