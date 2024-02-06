@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction } from "react";
+
 export interface LoginFormInterface {
   email: string;
   password: string;
@@ -15,10 +17,18 @@ export interface ErrorAuthInterface {
   msg: string;
 }
 
+export interface ErrorAuthStateContextInterface {
+  ok: boolean;
+  msg: string;
+}
+
 export interface AuthStateContextInterface {
   status: "checking" | "authenticated" | "no-authenticated";
   doLogin: () => void;
   doLogout: () => void;
   doCheking: () => void;
+  setErrors: (
+    data: ErrorAuthStateContextInterface
+  ) => Dispatch<SetStateAction<ErrorAuthStateContextInterface>>;
+  errors: ErrorAuthStateContextInterface;
 }
-

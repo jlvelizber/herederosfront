@@ -3,12 +3,13 @@ import {
   LoginFormInterface,
   AuthUserInterface,
   AuthStateContextInterface,
+  ErrorAuthStateContextInterface,
 } from "../interfaces";
-import { AxiosResponse } from "axios";
+import { AxiosError, AxiosResponse } from "axios";
 import { RegisterApi } from "../api/RegisterApi";
 import { AuthContext } from "../contexts";
 export const useAuth = () => {
-  const { doLogin, doLogout, doCheking } = useContext(
+  const { doLogin, doLogout, doCheking, setErrors, errors } = useContext(
     AuthContext
   ) as AuthStateContextInterface;
 
@@ -29,7 +30,9 @@ export const useAuth = () => {
 
       doLogin();
     } catch (error) {
-      console.error(error);
+      if (error instanceof AxiosError) {
+        setErrors(error?.response?.data as ErrorAuthStateContextInterface)
+      }
       localStorage.clear();
       doLogout();
       // setAuth({ status: "no-authenticated" });
@@ -55,6 +58,7 @@ export const useAuth = () => {
   return {
     startLogin,
     checkAuthToken,
+    errors
     // auth,
   };
 };

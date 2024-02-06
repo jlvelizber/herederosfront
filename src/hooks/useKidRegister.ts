@@ -1,8 +1,9 @@
-import { AxiosResponse } from "axios";
+import { AxiosError, AxiosResponse } from "axios";
 import { RegisterApi } from "../api/RegisterApi";
 import { KidInterface, RegisterKidAppInterfaceContext } from "../interfaces";
 import { useContext } from "react";
 import { RegisterKidAppContext } from "../contexts";
+import { HTTP_STATUS_CODE } from "../helpers";
 
 export const useKidRegister = () => {
   const {
@@ -10,6 +11,8 @@ export const useKidRegister = () => {
     setExistAnyResultQueryKids,
     setListRegisterKids,
     removeKIdToRegisterKids,
+    setErrorsFormRegisterKid,
+    errorsFormRegisterKid,
   } = useContext(RegisterKidAppContext) as RegisterKidAppInterfaceContext;
 
   const findKids = async (query: string) => {
@@ -88,7 +91,15 @@ export const useKidRegister = () => {
 
       return data;
     } catch (error) {
-      console.error(error);
+      if (error instanceof AxiosError) {
+        console.log(error.code);
+        if (error?.code === HTTP_STATUS_CODE.ERR_BAD_REQUEST) {
+          console.log(error.response?.data);
+          setErrorsFormRegisterKid(error.response?.data);
+        }
+        // setErrors(error?.response?.data as ErrorAuthStateContextInterface)
+        // console.error(error);
+      }
     }
   };
 
@@ -117,5 +128,6 @@ export const useKidRegister = () => {
     saveNewKid,
     listAllKids,
     listtKidsReporterFromDate,
+    errorsFormRegisterKid,
   };
 };

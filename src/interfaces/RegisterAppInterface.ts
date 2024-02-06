@@ -24,4 +24,6 @@ export interface RegisterKidAppInterfaceContext {
   removeKIdToRegisterKids: (kid: KidInterface) => void;
   gonnaRegisterNewKid: boolean;
   setGonnaRegisterNewKid: Dispatch<React.SetStateAction<boolean>>;
+  errorsFormRegisterKid: KidInterface | null;
+  setErrorsFormRegisterKid: Dispatch<React.SetStateAction<KidInterface | null>>;
 }

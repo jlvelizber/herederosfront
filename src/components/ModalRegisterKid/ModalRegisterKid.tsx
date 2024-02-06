@@ -24,7 +24,8 @@ const style = {
 export const ModalRegisterKid: FC<{
   open: boolean;
 }> = ({ open }) => {
-  const { saveNewKid, saveRegisterKid } = useKidRegister();
+  const { saveNewKid, saveRegisterKid, errorsFormRegisterKid } =
+    useKidRegister();
   const { setGonnaRegisterNewKid, addKIdToRegisterKids } = useContext(
     RegisterKidAppContext
   ) as RegisterKidAppInterfaceContext;
@@ -52,6 +53,7 @@ export const ModalRegisterKid: FC<{
   const handleSaveNewKid = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     e.stopPropagation();
+
     const kidSaved = await saveNewKid(formData);
 
     const kidRegister = localStorage.getItem("kidRegister");
@@ -100,6 +102,10 @@ export const ModalRegisterKid: FC<{
                       fullWidth
                       margin="normal"
                       onChange={handleInputChange}
+                      error={
+                        errorsFormRegisterKid?.identification ? true : false
+                      }
+                      helperText={errorsFormRegisterKid?.identification}
                     />
                   </Grid>
 
@@ -111,6 +117,8 @@ export const ModalRegisterKid: FC<{
                       fullWidth
                       margin="normal"
                       onChange={handleInputChange}
+                      error={errorsFormRegisterKid?.name ? true : false}
+                      helperText={errorsFormRegisterKid?.name}
                     />
                   </Grid>
                   <Grid item xs={6}>
@@ -121,6 +129,8 @@ export const ModalRegisterKid: FC<{
                       fullWidth
                       margin="normal"
                       onChange={handleInputChange}
+                      error={errorsFormRegisterKid?.lastname ? true : false}
+                      helperText={errorsFormRegisterKid?.lastname}
                     />
                   </Grid>
                   <Grid item xs={6}>
@@ -134,6 +144,8 @@ export const ModalRegisterKid: FC<{
                       fullWidth
                       margin="normal"
                       onChange={handleInputChange}
+                      error={errorsFormRegisterKid?.date_born ? true : false}
+                      helperText={errorsFormRegisterKid?.date_born}
                     />
                   </Grid>
                   <Grid item xs={6}>
@@ -144,6 +156,8 @@ export const ModalRegisterKid: FC<{
                       fullWidth
                       margin="normal"
                       onChange={handleInputChange}
+                      error={errorsFormRegisterKid?.parent_name ? true : false}
+                      helperText={errorsFormRegisterKid?.parent_name}
                     />
                   </Grid>
                   <Grid item xs={6}>
@@ -154,6 +168,10 @@ export const ModalRegisterKid: FC<{
                       fullWidth
                       margin="normal"
                       onChange={handleInputChange}
+                      error={
+                        errorsFormRegisterKid?.parent_lastname ? true : false
+                      }
+                      helperText={errorsFormRegisterKid?.parent_lastname}
                     />
                   </Grid>
                   <Grid item xs={6}>
@@ -164,6 +182,8 @@ export const ModalRegisterKid: FC<{
                       fullWidth
                       margin="normal"
                       onChange={handleInputChange}
+                      error={errorsFormRegisterKid?.parent_email ? true : false}
+                      helperText={errorsFormRegisterKid?.parent_email}
                     />
                   </Grid>
                   <Grid item xs={6}>
@@ -174,6 +194,8 @@ export const ModalRegisterKid: FC<{
                       fullWidth
                       margin="normal"
                       onChange={handleInputChange}
+                      error={errorsFormRegisterKid?.parent_phone ? true : false}
+                      helperText={errorsFormRegisterKid?.parent_phone}
                     />
                   </Grid>
                 </Grid>

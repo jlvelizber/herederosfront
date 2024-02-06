@@ -9,7 +9,7 @@ const loginInitialState: LoginFormInterface = {
 
 export const LoginForm = () => {
   const { formState, onInputChange } = useForm(loginInitialState);
-  const { startLogin } = useAuth();
+  const { startLogin, errors } = useAuth();
 
   const handleSubmit = async (event: SyntheticEvent<HTMLFormElement>) => {
     event.stopPropagation();
@@ -18,7 +18,10 @@ export const LoginForm = () => {
       email: formState?.email,
       password: formState?.password,
     };
-    await startLogin(params);
+
+    await startLogin(params).catch((reason: unknown) =>
+      console.error(`$eror login ${reason}`)
+    );
   };
 
   return (
@@ -34,8 +37,12 @@ export const LoginForm = () => {
             name="email"
             value={formState?.email}
             onChange={onInputChange}
-            className="w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+            className={`w-full rounded-lg border border-stroke bg-transparent py-4 pl-6 pr-10 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary ${!errors.ok && `border-danger`}`}
           />
+
+          {!errors.ok && (
+            <p className="text-danger font-medium py-2">{errors.msg}</p>
+          )}
 
           <span className="absolute right-4 top-4">
             <svg
