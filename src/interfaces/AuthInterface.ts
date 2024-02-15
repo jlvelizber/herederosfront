@@ -1,5 +1,3 @@
-import { Dispatch, SetStateAction } from "react";
-
 export interface LoginFormInterface {
   email: string;
   password: string;
@@ -29,6 +27,6 @@ export interface AuthStateContextInterface {
   doCheking: () => void;
   setErrors: (
     data: ErrorAuthStateContextInterface
-  ) => Dispatch<SetStateAction<ErrorAuthStateContextInterface>>;
+  ) => void;
   errors: ErrorAuthStateContextInterface;
 }
