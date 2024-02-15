@@ -1,4 +1,4 @@
-import React, { FC, Key } from "react";
+import { FC, Key } from "react";
 import {
   Table,
   TableBody,
