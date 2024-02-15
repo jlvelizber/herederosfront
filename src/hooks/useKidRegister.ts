@@ -1,7 +1,7 @@
+import { useContext } from "react";
 import { AxiosError, AxiosResponse } from "axios";
 import { RegisterApi } from "../api/RegisterApi";
 import { KidInterface, RegisterKidAppInterfaceContext } from "../interfaces";
-import { useContext } from "react";
 import { RegisterKidAppContext } from "../contexts";
 import { HTTP_STATUS_CODE } from "../helpers";
 
@@ -120,6 +120,37 @@ export const useKidRegister = () => {
     setListQueryKids(data);
   };
 
+  const downloadResultReport = async (
+    serviceId: string,
+    dateString: string
+  ) => {
+    if (dateString && serviceId) {
+      const response = await RegisterApi.post(
+        `registers/export-query`,
+        {
+          serviceId,
+          dateString,
+        },
+        {
+          responseType: "blob",
+        }
+      );
+
+      const href = window.URL.createObjectURL(response.data);
+
+      const anchorElement = document.createElement("a");
+
+      anchorElement.href = href;
+      anchorElement.download = "herederos_asistencia_" + dateString;
+
+      document.body.appendChild(anchorElement);
+      anchorElement.click();
+
+      document.body.removeChild(anchorElement);
+      window.URL.revokeObjectURL(href);
+    }
+  };
+
   return {
     findKids,
     saveRegisterKid,
@@ -129,5 +160,6 @@ export const useKidRegister = () => {
     listAllKids,
     listtKidsReporterFromDate,
     errorsFormRegisterKid,
+    downloadResultReport,
   };
 };

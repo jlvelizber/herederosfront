@@ -9,12 +9,17 @@ import { KidInterface, RegisterKidAppInterfaceContext } from "../../interfaces";
 import { getYearOldKid } from "../../helpers";
 import { useKidRegister } from "../../hooks";
 import { RegisterKidAppContext } from "../../contexts";
+import { Button } from "@mui/material";
+import { ModalRegisterKid } from "../../components/ModalRegisterKid";
 
 export const ListKidPage = () => {
   const { listAllKids } = useKidRegister();
-  const { setListQueryKids, listQueryKids: kids } = useContext(
-    RegisterKidAppContext
-  ) as RegisterKidAppInterfaceContext;
+  const {
+    setListQueryKids,
+    listQueryKids: kids,
+    gonnaRegisterNewKid,
+    setGonnaRegisterNewKid,
+  } = useContext(RegisterKidAppContext) as RegisterKidAppInterfaceContext;
 
   useEffect(() => {
     listAllKids();
@@ -25,6 +30,16 @@ export const ListKidPage = () => {
 
   return (
     <AppLayout>
+      <ModalRegisterKid open={gonnaRegisterNewKid} />
+      <Button
+        variant="contained"
+        color="primary"
+        fullWidth
+        onClick={() => setGonnaRegisterNewKid(true)}
+        size="large"
+      >
+        Registrar Niño(a)
+      </Button>
       <Table>
         <TableHead>
           <TableRow>

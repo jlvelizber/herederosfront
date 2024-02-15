@@ -1,4 +1,4 @@
-import { ChangeEvent, Key, useContext, useEffect, useState } from "react";
+import { ChangeEvent, FC, Key, useContext, useEffect, useState } from "react";
 import {
   Button,
   Grid,
@@ -16,7 +16,9 @@ import {
   RegisterKidAppInterfaceContext,
 } from "../../interfaces";
 
-export const ReporterNavFilter = () => {
+export const ReporterNavFilter: FC<{
+  onFiltersOnNavbar: (filters: { service: string; date: string }) => void;
+}> = ({ onFiltersOnNavbar }) => {
   const { getListCampus } = useCampus();
   const { getListServices } = useServices();
   const { listtKidsReporterFromDate } = useKidRegister();
@@ -52,6 +54,7 @@ export const ReporterNavFilter = () => {
 
   const handleMakeQuery = async () => {
     await listtKidsReporterFromDate(filters.service, filters.date);
+    onFiltersOnNavbar({ ...filters });
   };
 
   useEffect(() => {
