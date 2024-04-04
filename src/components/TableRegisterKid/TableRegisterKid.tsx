@@ -3,6 +3,7 @@ import { Button } from "@mui/material";
 import {
   InfoRegisterCampusSelected,
   ModalDataKidResults,
+  QRScanner,
   SeekerKidBar,
   TableListKids,
 } from "..";
@@ -42,6 +43,8 @@ export const TableRegisterKid = () => {
   return (
     <>
       <InfoRegisterCampusSelected />
+
+      <QRScanner />
 
       <SeekerKidBar />
 
