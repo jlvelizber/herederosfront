@@ -11,6 +11,7 @@ import { RegisterKidAppContext } from "../../contexts";
 import { KidInterface, RegisterKidAppInterfaceContext } from "../../interfaces";
 import { useKidRegister } from "../../hooks";
 import { ModalRegisterKid } from "../ModalRegisterKid";
+import QR  from '/qr.svg'
 
 export const TableRegisterKid = () => {
   const {
@@ -47,6 +48,8 @@ export const TableRegisterKid = () => {
       <QRScanner />
 
       <SeekerKidBar />
+
+      <img src={QR} width={'50%'} />
 
       <ModalDataKidResults
         open={existAnyResultQueryKids}

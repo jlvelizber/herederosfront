@@ -18,7 +18,7 @@ export const useQrScanner = () => {
             setPort(port);
 
             // Leer datos del puerto serie
-            const reader = port.readable.getReader();
+            const reader = await port.readable.getReader();
             // eslint-disable-next-line no-constant-condition
             while (true) {
                 const { value, done } = await reader.read();
@@ -31,10 +31,10 @@ export const useQrScanner = () => {
             console.error("Error al conectar al dispositivo:", error);
         }
     };
-    console.log(port)
     return {
         connectToDevice,
         data,
+        setData,
         port
     }
 }
