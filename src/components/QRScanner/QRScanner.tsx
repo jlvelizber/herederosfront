@@ -1,28 +1,23 @@
 import { FC, useEffect } from "react";
-import { useQrScanner } from "../../hooks";
-import io from "socket.io-client";
+import { useQrScanner, useSocket } from "../../hooks";
 import { EVENTS_NAME } from "../../constants";
 
-const socket = io("http://localhost:3000");
 
 export const QRScanner: FC = () => {
-  const { connectToDevice, data, port, setData } = useQrScanner();
-  // const { emit } = useSocket();
+  const { connectToDevice, data, port } = useQrScanner();
+  const { emitSocket, eventOnData } = useSocket();
 
   const handleClick = () => {
     connectToDevice();
   };
 
   useEffect(() => {
-    socket.emit(`${EVENTS_NAME.QR_READ}`, data.replace(/\r\n/g,"").trim());
-    socket.on(`${EVENTS_NAME.QR_EXIST_KID}`, (kid) => console.log('existe',kid));
-    socket.on(`${EVENTS_NAME.QR_NOT_EXIST_KID}`, (kid) => console.log('no existe',kid));
+    emitSocket(`${EVENTS_NAME.QR_READ}`, data.replace(/\r\n/g, "").trim());
+  }, [data]);
 
-   
-  }, [socket, data]);
-
-  // useEffect(() =>  { return () => setData("")}, [data])
-  
+  useEffect(() => {
+    console.log(eventOnData);
+  }, [eventOnData]);
 
   return (
     <div className="row p-4 bg-gray my-3">
@@ -41,7 +36,6 @@ export const QRScanner: FC = () => {
           </span>
         )}
       </h1>
-      {data}
     </div>
   );
 };

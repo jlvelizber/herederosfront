@@ -1,4 +1,4 @@
-import { useState } from "react";
+import {  useState } from "react";
 import { SerialPort } from "../interfaces";
 
 
@@ -6,6 +6,12 @@ export const useQrScanner = () => {
 
     const [port, setPort] = useState<SerialPort | null>(null);
     const [data, setData] = useState<string>("");
+
+    // const newData = useCallback((prevState: any) => console.log(prevState), [data])
+
+    // console.log(newData)
+
+    // useEffect(() => { return () => setData("") }, [data])
 
     const connectToDevice = async () => {
         try {
@@ -25,7 +31,7 @@ export const useQrScanner = () => {
                 if (done) break;
                 const textDecoder = new TextDecoder();
                 const decodedValue = textDecoder.decode(value);
-                setData((prevData) => prevData + decodedValue);
+                setData(decodedValue);
             }
         } catch (error) {
             console.error("Error al conectar al dispositivo:", error);

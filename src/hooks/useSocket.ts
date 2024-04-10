@@ -1,29 +1,48 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import io from 'socket.io-client';
 import { getEnvVariables } from '../helpers';
 import { EVENTS_NAME } from '../constants';
-const { VITE_API_URL } = getEnvVariables();
+const { VITE_SOCKET_API_URL } = getEnvVariables();
 
 
-const socket = io(VITE_API_URL)
+const socket = io(VITE_SOCKET_API_URL)
 
 export const useSocket = () => {
-    
+
+    const [eventEmitData, setEventEmitData] = useState<{ name: string, data: unknown }>({
+        name: '',
+        data: ''
+    });
+
+    const [eventOnData, setEventOnData] = useState<{data?: unknown}>();
+
+    socket.on('connection', () => console.log('conectado'))
     useEffect(() => {
-        socket.on('connect', () => {
-            console.log('Conectado al servidor de sockets');
-        });
+        
+        if (eventEmitData.name) {
+            socket.emit(eventEmitData.name, eventEmitData.data);
+        }
 
-        // return () => {
-        //     socket.disconnect();
-        // };
-    }, []);
 
-    const emit = (data: string, eventName = EVENTS_NAME.QR_READ) => {
-        console.log(`'QR LEIDO ': ${data}`)
-        socket.emit(`${eventName}`, data);
+        socket.on(`${EVENTS_NAME.QR_EXIST_KID}`, (kid) =>
+            setEventOnData(kid)
+        );
+        socket.on(`${EVENTS_NAME.QR_NOT_EXIST_KID}`, (kid) =>
+            setEventOnData(kid)
+        );
+      
+    }, [eventEmitData]);
+
+
+    const emitSocket = (name: string = EVENTS_NAME.QR_READ, data: unknown) => {
+
+        setEventEmitData({
+            name,
+            data
+        })
     }
     return {
-        emit
+        emitSocket,
+        eventOnData
     }
 }
