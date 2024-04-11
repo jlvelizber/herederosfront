@@ -14,7 +14,7 @@ export const useSocket = () => {
         data: ''
     });
 
-    const [eventOnData, setEventOnData] = useState<{data?: unknown}>();
+    const [dataOnEvent, setDataOnEvent] = useState<{data?: unknown}>();
 
     socket.on('connection', () => console.log('conectado'))
     useEffect(() => {
@@ -25,10 +25,10 @@ export const useSocket = () => {
 
 
         socket.on(`${EVENTS_NAME.QR_EXIST_KID}`, (kid) =>
-            setEventOnData(kid)
+            setDataOnEvent(kid)
         );
         socket.on(`${EVENTS_NAME.QR_NOT_EXIST_KID}`, (kid) =>
-            setEventOnData(kid)
+            setDataOnEvent(kid)
         );
       
     }, [eventEmitData]);
@@ -43,6 +43,6 @@ export const useSocket = () => {
     }
     return {
         emitSocket,
-        eventOnData
+        dataOnEvent
     }
 }

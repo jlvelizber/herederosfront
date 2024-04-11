@@ -22,6 +22,7 @@ export const TableRegisterKid = () => {
     existAnyResultQueryKids,
     listRegisterKids,
     gonnaRegisterNewKid,
+    errorsFormRegisterKid
   } = useContext(RegisterKidAppContext) as RegisterKidAppInterfaceContext;
 
   const { loadRegisterOpened, removeKidFromRegister } = useKidRegister();
@@ -49,12 +50,14 @@ export const TableRegisterKid = () => {
 
       <SeekerKidBar />
 
-      <img src={QR} width={'50%'} />
+      <img src={QR} width={'30%'} />
 
       <ModalDataKidResults
         open={existAnyResultQueryKids}
         kids={listQueryKids}
       />
+
+      {JSON.stringify(errorsFormRegisterKid)}
 
       <ModalRegisterKid open={gonnaRegisterNewKid} />
 

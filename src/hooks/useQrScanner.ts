@@ -5,14 +5,9 @@ import { SerialPort } from "../interfaces";
 export const useQrScanner = () => {
 
     const [port, setPort] = useState<SerialPort | null>(null);
-    const [data, setData] = useState<string>("");
+    const [dataScanned, setDataScanned] = useState<string>("");
 
-    // const newData = useCallback((prevState: any) => console.log(prevState), [data])
-
-    // console.log(newData)
-
-    // useEffect(() => { return () => setData("") }, [data])
-
+    
     const connectToDevice = async () => {
         try {
             // Solicitar permiso para acceder al puerto serie
@@ -31,7 +26,7 @@ export const useQrScanner = () => {
                 if (done) break;
                 const textDecoder = new TextDecoder();
                 const decodedValue = textDecoder.decode(value);
-                setData(decodedValue);
+                setDataScanned(decodedValue);
             }
         } catch (error) {
             console.error("Error al conectar al dispositivo:", error);
@@ -39,8 +34,8 @@ export const useQrScanner = () => {
     };
     return {
         connectToDevice,
-        data,
-        setData,
+        dataScanned,
+        setDataScanned,
         port
     }
 }
