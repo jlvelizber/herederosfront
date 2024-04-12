@@ -28,9 +28,16 @@ export const ListKidPage = () => {
     };
   }, []);
 
+  const onUpdateTableKids = async () => {
+    await listAllKids();
+  };
+
   return (
     <AppLayout>
-      <ModalRegisterKid open={gonnaRegisterNewKid} />
+      <ModalRegisterKid
+        open={gonnaRegisterNewKid}
+        onNewKidSuccess={onUpdateTableKids}
+      />
       <Button
         variant="contained"
         color="primary"

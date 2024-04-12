@@ -1,4 +1,11 @@
-import { FC, useContext, useState, ChangeEvent, FormEvent } from "react";
+import {
+  FC,
+  useContext,
+  useState,
+  ChangeEvent,
+  FormEvent,
+  useEffect,
+} from "react";
 import { KidInterface, RegisterKidAppInterfaceContext } from "../../interfaces";
 import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
@@ -23,10 +30,10 @@ const style = {
 
 export const ModalRegisterKid: FC<{
   open: boolean;
-}> = ({ open }) => {
-  const { saveNewKid, saveRegisterKid, errorsFormRegisterKid } =
-    useKidRegister();
-  const { setGonnaRegisterNewKid, addKIdToRegisterKids } = useContext(
+  onNewKidSuccess: (kid: KidInterface) => void;
+}> = ({ open, onNewKidSuccess }) => {
+  const { saveNewKid, errorsFormRegisterKid } = useKidRegister();
+  const { setGonnaRegisterNewKid, setErrorsFormRegisterKid } = useContext(
     RegisterKidAppContext
   ) as RegisterKidAppInterfaceContext;
 
@@ -56,24 +63,16 @@ export const ModalRegisterKid: FC<{
 
     const kidSaved = await saveNewKid(formData);
 
-    const kidRegister = localStorage.getItem("kidRegister");
+    if (kidSaved) {
+      onNewKidSuccess(kidSaved);
 
-    if (kidRegister) {
-      const dataJSON = JSON.parse(kidRegister);
-
-      const params = {
-        register_user_id: 1,
-        kid_id: kidSaved?.id as string,
-        service_id: dataJSON.service?.id as string,
-      };
-      saveRegisterKid(params);
-
-      if (kidSaved) {
-        addKIdToRegisterKids(kidSaved);
-        handleCloseModal();
-      }
+      handleCloseModal();
     }
   };
+
+  useEffect(() => {
+    return () => setErrorsFormRegisterKid(null);
+  }, []);
 
   return (
     <Modal open={open} onClose={handleCloseModal}>

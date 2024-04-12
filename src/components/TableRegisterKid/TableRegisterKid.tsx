@@ -12,7 +12,6 @@ import { RegisterKidAppContext } from "../../contexts";
 import { KidInterface, RegisterKidAppInterfaceContext } from "../../interfaces";
 import { useKidRegister } from "../../hooks";
 import { ModalRegisterKid } from "../ModalRegisterKid";
-import QR from "/qr.svg";
 
 export const TableRegisterKid = () => {
   const {
@@ -25,9 +24,11 @@ export const TableRegisterKid = () => {
     gonnaRegisterNewKid,
     errorsFromRegisterKidAsistance,
     setErrorsFromRegisterKidAsistance,
+    addKIdToRegisterKids,
   } = useContext(RegisterKidAppContext) as RegisterKidAppInterfaceContext;
 
-  const { loadRegisterOpened, removeKidFromRegister } = useKidRegister();
+  const { loadRegisterOpened, removeKidFromRegister, saveRegisterKid } =
+    useKidRegister();
 
   useEffect(() => {
     loadRegisterOpened();
@@ -44,6 +45,21 @@ export const TableRegisterKid = () => {
 
   const handleRemoveKidRegister = async (kid: KidInterface) => {
     await removeKidFromRegister(kid);
+  };
+
+  const onHandleRegisterKid = async (kid: KidInterface) => {
+    const kidRegister = localStorage.getItem("kidRegister");
+    if (kidRegister) {
+      const dataJSON = JSON.parse(kidRegister);
+      const params = {
+        register_user_id: 1,
+        kid_id: kid?.id as string,
+        service_id: dataJSON.service?.id as string,
+      };
+      saveRegisterKid(params);
+
+      addKIdToRegisterKids(kid);
+    }
   };
 
   return (
@@ -66,7 +82,10 @@ export const TableRegisterKid = () => {
         />
       )}
 
-      <ModalRegisterKid open={gonnaRegisterNewKid} />
+      <ModalRegisterKid
+        open={gonnaRegisterNewKid}
+        onNewKidSuccess={onHandleRegisterKid}
+      />
 
       {/* Listado de asistencia */}
       {listRegisterKids.length > 0 && (
