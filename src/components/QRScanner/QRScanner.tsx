@@ -6,9 +6,9 @@ import { RegisterKidAppContext } from "../../contexts";
 
 export const QRScanner: FC = () => {
   const { connectToDevice, dataScanned, port } = useQrScanner();
-  const { emitSocket, dataOnEvent } = useSocket();
+  const { emitSocket, dataOnEventSocket } = useSocket();
   const { saveRegisterKid } = useKidRegister();
-  const { addKIdToRegisterKids } = useContext(
+  const { addKIdToRegisterKids, setExistAnyResultQueryKids } = useContext(
     RegisterKidAppContext
   ) as RegisterKidAppInterfaceContext;
 
@@ -17,7 +17,6 @@ export const QRScanner: FC = () => {
   };
 
   useEffect(() => {
-    
     emitSocket(
       `${EVENTS_NAME.QR_READ}`,
       dataScanned.replace(/\r\n/g, "").trim()
@@ -25,10 +24,16 @@ export const QRScanner: FC = () => {
   }, [dataScanned]);
 
   useEffect(() => {
-    if (dataOnEvent) {
-      handleSelectKid(dataOnEvent as KidInterface);
+    // verificamos si niño existe
+    if (dataOnEventSocket?.name == EVENTS_NAME.QR_EXIST_KID) {
+      // si existe envia a registrar
+      handleSelectKid(dataOnEventSocket.data as KidInterface);
+    } else if (dataOnEventSocket?.name == EVENTS_NAME.QR_NOT_EXIST_KID) {
+      // muestra si desea registrar
+      setExistAnyResultQueryKids(true);
     }
-  }, [dataOnEvent]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dataOnEventSocket]);
 
   const handleSelectKid = async (kid: KidInterface) => {
     const kidRegister = localStorage.getItem("kidRegister");
@@ -43,7 +48,7 @@ export const QRScanner: FC = () => {
       };
 
       const register = await saveRegisterKid(params);
-      if(register) addKIdToRegisterKids(kid);
+      if (register) addKIdToRegisterKids(kid);
     }
   };
 
@@ -55,12 +60,15 @@ export const QRScanner: FC = () => {
           {!port ? "Inactivo" : "Activo"}
         </strong>
         {!port && (
-          <span
-            className="underline text-xs cursor-pointer text-black font-semibold"
-            onClick={handleClick}
-          >
-            [Activar]
-          </span>
+          <>
+            {" "}
+            <span
+              className="underline text-xs cursor-pointer text-black font-semibold"
+              onClick={handleClick}
+            >
+              [Activar]
+            </span>
+          </>
         )}
       </h1>
     </div>

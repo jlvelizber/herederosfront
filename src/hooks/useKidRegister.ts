@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { AxiosError, AxiosResponse } from "axios";
 import { RegisterApi } from "../api/RegisterApi";
 import { KidInterface, RegisterKidAppInterfaceContext } from "../interfaces";
@@ -13,12 +13,10 @@ export const useKidRegister = () => {
     removeKIdToRegisterKids,
     setErrorsFormRegisterKid,
     errorsFormRegisterKid,
+
+    setErrorsFromRegisterKidAsistance
   } = useContext(RegisterKidAppContext) as RegisterKidAppInterfaceContext;
 
-  useEffect(() => {
-
-    return () => setErrorsFormRegisterKid(null)
-  }, [])
 
   const findKids = async (query: string) => {
     setExistAnyResultQueryKids(false);
@@ -45,7 +43,7 @@ export const useKidRegister = () => {
         `registers`,
         { kid_id, service_id, register_user_id }
       );
-      setErrorsFormRegisterKid(null)
+      setErrorsFromRegisterKidAsistance(null)
       return data;
 
     } catch (error) {
@@ -53,7 +51,7 @@ export const useKidRegister = () => {
       if (error instanceof AxiosError) {
         if (error?.code === HTTP_STATUS_CODE.ERR_BAD_REQUEST) {
           //TODO:  mensaje de nino repetido -- cambiar la forma en que viene desde el back
-          setErrorsFormRegisterKid(error.response?.data?.data?.kid_id);
+          setErrorsFromRegisterKidAsistance(error.response?.data?.data?.kid_id);
         }
       }
     }
@@ -110,7 +108,7 @@ export const useKidRegister = () => {
     } catch (error) {
       if (error instanceof AxiosError) {
         if (error?.code === HTTP_STATUS_CODE.ERR_BAD_REQUEST) {
-          console.log(error.response?.data);
+          // console.log(error.response?.data);
           setErrorsFormRegisterKid(error.response?.data);
         }
         // setErrors(error?.response?.data as ErrorAuthStateContextInterface)

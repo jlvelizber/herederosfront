@@ -47,9 +47,9 @@ export const ModalDataKidResults: FC<{
         service_id: dataJSON.service?.id as string,
       };
 
-      await saveRegisterKid(params);
+      const result = await saveRegisterKid(params);
+      if (result) addKIdToRegisterKids(kid);
 
-      addKIdToRegisterKids(kid);
       handleCloseModal();
     }
   };

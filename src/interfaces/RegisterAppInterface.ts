@@ -26,4 +26,6 @@ export interface RegisterKidAppInterfaceContext {
   setGonnaRegisterNewKid: Dispatch<React.SetStateAction<boolean>>;
   errorsFormRegisterKid: KidInterface | null;
   setErrorsFormRegisterKid: Dispatch<React.SetStateAction<KidInterface | null>>;
+  errorsFromRegisterKidAsistance: string | null;
+  setErrorsFromRegisterKidAsistance: Dispatch<React.SetStateAction<string | null>>;
 }

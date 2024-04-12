@@ -3,6 +3,7 @@ import { Button } from "@mui/material";
 import {
   InfoRegisterCampusSelected,
   ModalDataKidResults,
+  ModalError,
   QRScanner,
   SeekerKidBar,
   TableListKids,
@@ -11,7 +12,7 @@ import { RegisterKidAppContext } from "../../contexts";
 import { KidInterface, RegisterKidAppInterfaceContext } from "../../interfaces";
 import { useKidRegister } from "../../hooks";
 import { ModalRegisterKid } from "../ModalRegisterKid";
-import QR  from '/qr.svg'
+import QR from "/qr.svg";
 
 export const TableRegisterKid = () => {
   const {
@@ -22,7 +23,8 @@ export const TableRegisterKid = () => {
     existAnyResultQueryKids,
     listRegisterKids,
     gonnaRegisterNewKid,
-    errorsFormRegisterKid
+    errorsFromRegisterKidAsistance,
+    setErrorsFromRegisterKidAsistance,
   } = useContext(RegisterKidAppContext) as RegisterKidAppInterfaceContext;
 
   const { loadRegisterOpened, removeKidFromRegister } = useKidRegister();
@@ -30,6 +32,8 @@ export const TableRegisterKid = () => {
   useEffect(() => {
     loadRegisterOpened();
   }, []);
+
+  const handleCLoseModelError = () => setErrorsFromRegisterKidAsistance(null);
 
   const handleCLoseRegister = () => {
     localStorage.removeItem("kidRegister");
@@ -50,14 +54,17 @@ export const TableRegisterKid = () => {
 
       <SeekerKidBar />
 
-      <img src={QR} width={'30%'} />
-
       <ModalDataKidResults
         open={existAnyResultQueryKids}
         kids={listQueryKids}
       />
 
-      {JSON.stringify(errorsFormRegisterKid)}
+      {errorsFromRegisterKidAsistance && (
+        <ModalError
+          message={errorsFromRegisterKidAsistance}
+          onClose={handleCLoseModelError}
+        />
+      )}
 
       <ModalRegisterKid open={gonnaRegisterNewKid} />
 

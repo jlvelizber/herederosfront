@@ -45,8 +45,14 @@ export const RegisterKidAppProvider: FC<{ children: ReactNode }> = ({
 
   const [listRegisterKids, setListRegisterKids] = useState<KidInterface[]>([]);
 
+  /**
+   * Errores desde el formulario de registro de un niño
+   */
   const [errorsFormRegisterKid, setErrorsFormRegisterKid] =
     useState<KidInterface | null>(null);
+
+  const [errorsFromRegisterKidAsistance, setErrorsFromRegisterKidAsistance] =
+    useState<string | null>(null);
 
   /**
    * In chagrge open modal for new register kids
@@ -105,6 +111,8 @@ export const RegisterKidAppProvider: FC<{ children: ReactNode }> = ({
         setGonnaRegisterNewKid,
         errorsFormRegisterKid,
         setErrorsFormRegisterKid,
+        errorsFromRegisterKidAsistance,
+        setErrorsFromRegisterKidAsistance,
       }}
     >
       {children}
