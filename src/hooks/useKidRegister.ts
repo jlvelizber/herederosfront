@@ -124,6 +124,19 @@ export const useKidRegister = () => {
     setListQueryKids(data);
   };
 
+  const removeKid = async (kidId: number) => {
+    try {
+      const { data }: AxiosResponse<boolean> = await RegisterApi.delete(
+        `kids/${kidId}`
+      );
+
+      return data;
+
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   const listtKidsReporterFromDate = async (
     serviceId: string,
     dateString: string
@@ -175,5 +188,6 @@ export const useKidRegister = () => {
     listtKidsReporterFromDate,
     errorsFormRegisterKid,
     downloadResultReport,
+    removeKid
   };
 };

@@ -9,6 +9,7 @@ import {
 import { KidInterface } from "../../interfaces";
 import { getYearOldKid } from "../../helpers";
 
+
 export const TableReporterRegisterKids: FC<{ kids: KidInterface[] }> = ({
   kids,
 }) => {
@@ -31,6 +32,7 @@ export const TableReporterRegisterKids: FC<{ kids: KidInterface[] }> = ({
           <TableCell>
             <span className="font-bold"> Contacto</span>
           </TableCell>
+         
         </TableRow>
       </TableHead>
       <TableBody>

@@ -8,4 +8,5 @@ export interface KidInterface {
   parent_lastname: string;
   parent_email: string;
   parent_phone: string;
+  qr?: string;
 }
