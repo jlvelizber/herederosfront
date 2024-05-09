@@ -30,22 +30,24 @@ const style = {
 
 export const ModalRegisterKid: FC<{
   open: boolean;
+  titleModal?: string;
   onNewKidSuccess: (kid: KidInterface) => void;
-}> = ({ open, onNewKidSuccess }) => {
-  const { saveNewKid, errorsFormRegisterKid } = useKidRegister();
+  kid?: KidInterface;
+}> = ({ open, onNewKidSuccess, titleModal, kid }) => {
+  const { saveNewKid, errorsFormRegisterKid, updateKid } = useKidRegister();
   const { setGonnaRegisterNewKid, setErrorsFormRegisterKid } = useContext(
     RegisterKidAppContext
   ) as RegisterKidAppInterfaceContext;
 
   const [formData, setFormData] = useState<KidInterface>({
-    identification: "",
-    name: "",
-    lastname: "",
-    date_born: "",
-    parent_name: "",
-    parent_lastname: "",
-    parent_email: "",
-    parent_phone: "",
+    identification: kid?.identification || "",
+    name: kid?.name || "",
+    lastname: kid?.lastname || "",
+    date_born: kid?.date_born || "",
+    parent_name: kid?.parent_name || "",
+    parent_lastname: kid?.parent_lastname || "",
+    parent_email: kid?.parent_email || "",
+    parent_phone: kid?.parent_phone || "",
   });
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -62,6 +64,19 @@ export const ModalRegisterKid: FC<{
     e.stopPropagation();
 
     const kidSaved = await saveNewKid(formData);
+
+    if (kidSaved) {
+      onNewKidSuccess(kidSaved);
+
+      handleCloseModal();
+    }
+  };
+
+  const handleUpdaKid = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const kidSaved = await updateKid(formData);
 
     if (kidSaved) {
       onNewKidSuccess(kidSaved);
@@ -89,8 +104,10 @@ export const ModalRegisterKid: FC<{
               textAlign: "center",
             }}
           >
-            <form onSubmit={handleSaveNewKid}>
-              <h1 className="font-bold">Registro de nuevo Niño(a)</h1>
+            <form onSubmit={kid?.id ? handleUpdaKid : handleSaveNewKid}>
+              <h1 className="font-bold">
+                {titleModal || "Registro de nuevo Niño(a)"}
+              </h1>
               <Box className="py-2">
                 <Grid container spacing={1}>
                   <Grid item xs={6}>
@@ -105,6 +122,7 @@ export const ModalRegisterKid: FC<{
                         errorsFormRegisterKid?.identification ? true : false
                       }
                       helperText={errorsFormRegisterKid?.identification}
+                      value={formData.identification}
                     />
                   </Grid>
 
@@ -118,6 +136,7 @@ export const ModalRegisterKid: FC<{
                       onChange={handleInputChange}
                       error={errorsFormRegisterKid?.name ? true : false}
                       helperText={errorsFormRegisterKid?.name}
+                      value={formData.name || ''}
                     />
                   </Grid>
                   <Grid item xs={6}>

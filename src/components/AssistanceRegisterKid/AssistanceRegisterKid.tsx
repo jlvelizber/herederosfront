@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { FC, useContext, useEffect } from "react";
 import { Button } from "@mui/material";
 import {
   InfoRegisterCampusSelected,
@@ -6,15 +6,15 @@ import {
   ModalError,
   QRScanner,
   SeekerKidBar,
-  TableListKids,
+  TableListAssistanceKids,
 } from "..";
 import { RegisterKidAppContext } from "../../contexts";
 import { KidInterface, RegisterKidAppInterfaceContext } from "../../interfaces";
 import { useKidRegister } from "../../hooks";
 import { ModalRegisterKid } from "../ModalRegisterKid";
-import QR  from '/qr.svg'
 
-export const TableRegisterKid = () => {
+
+export const AssistanceRegisterKid:FC = () => {
   const {
     setServiceSelected,
     setCampusSelected,
@@ -69,8 +69,6 @@ export const TableRegisterKid = () => {
 
       <QRScanner />
 
-      <img src={QR} width='30%'/>
-
       <SeekerKidBar />
 
       <ModalDataKidResults
@@ -92,7 +90,7 @@ export const TableRegisterKid = () => {
 
       {/* Listado de asistencia */}
       {listRegisterKids.length > 0 && (
-        <TableListKids
+        <TableListAssistanceKids
           variant="remove"
           kids={listRegisterKids}
           handleSelectKid={(kid) => handleRemoveKidRegister(kid)}

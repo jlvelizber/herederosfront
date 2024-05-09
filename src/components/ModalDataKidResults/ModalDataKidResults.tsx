@@ -4,7 +4,7 @@ import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
 import CloseIcon from "@mui/icons-material/Close";
 import { RegisterKidAppContext } from "../../contexts";
-import { TableListKids } from "..";
+import { TableListAssistanceKids } from "..";
 import { useKidRegister } from "../../hooks";
 import { Button } from "@mui/material";
 
@@ -68,7 +68,7 @@ export const ModalDataKidResults: FC<{
 
         <Box>
           {kids.length > 0 ? (
-            <TableListKids
+            <TableListAssistanceKids
               kids={kids}
               handleSelectKid={(kid: KidInterface) => handleSelectKid(kid)}
               variant="add"

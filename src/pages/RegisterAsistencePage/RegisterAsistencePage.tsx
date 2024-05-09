@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { AppLayout } from "../../layouts";
-import { BeginRegisterAsistence, TableRegisterKid } from "../../components";
+import { BeginRegisterAsistence, AssistanceRegisterKid } from "../../components";
 import { RegisterKidAppContext } from "../../contexts";
 import { RegisterKidAppInterfaceContext } from "../../interfaces";
 
@@ -11,7 +11,7 @@ export const RegisterAsistencePage = () => {
 
   return (
     <AppLayout>
-      {!isRegisterInitiated ? <BeginRegisterAsistence /> : <TableRegisterKid/>}
+      {!isRegisterInitiated ? <BeginRegisterAsistence /> : <AssistanceRegisterKid/>}
     </AppLayout>
   );
 };

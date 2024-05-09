@@ -2,11 +2,10 @@ import { useEffect, useContext, useState } from "react";
 import Button from "@mui/material/Button";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import { AppLayout } from "../../layouts";
-import { ReporterNavFilter } from "../../components";
+import { ReporterNavFilter, TableReporterRegisterKids } from "../../components";
 
 import { RegisterKidAppInterfaceContext } from "../../interfaces";
 import { RegisterKidAppContext } from "../../contexts";
-import { TableReporterRegisterKids } from "../../components/TableReporterRegisterKids";
 import { useKidRegister } from "../../hooks";
 
 export const ReporterPage = () => {

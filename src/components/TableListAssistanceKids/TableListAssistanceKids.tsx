@@ -11,7 +11,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { KidInterface } from "../../interfaces";
 import { getYearOldKid } from "../../helpers";
 
-export const TableListKids: FC<{
+export const TableListAssistanceKids: FC<{
   kids: KidInterface[];
   handleSelectKid: (kid: KidInterface) => void;
   variant: "remove" | "add";

@@ -116,6 +116,25 @@ export const useKidRegister = () => {
       }
     }
   };
+  const updateKid = async (kidData: KidInterface) => {
+    try {
+      const { data }: AxiosResponse<KidInterface> = await RegisterApi.post(
+        `kids`,
+        kidData
+      );
+
+      return data;
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        if (error?.code === HTTP_STATUS_CODE.ERR_BAD_REQUEST) {
+          // console.log(error.response?.data);
+          setErrorsFormRegisterKid(error.response?.data);
+        }
+        // setErrors(error?.response?.data as ErrorAuthStateContextInterface)
+        // console.error(error);
+      }
+    }
+  };
 
   const listAllKids = async () => {
     const { data }: AxiosResponse<KidInterface[]> = await RegisterApi.get(
@@ -184,6 +203,7 @@ export const useKidRegister = () => {
     loadRegisterOpened,
     removeKidFromRegister,
     saveNewKid,
+    updateKid,
     listAllKids,
     listtKidsReporterFromDate,
     errorsFormRegisterKid,

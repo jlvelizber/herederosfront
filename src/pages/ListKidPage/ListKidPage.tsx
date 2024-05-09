@@ -1,20 +1,15 @@
-import { Key, useEffect, useContext, useState } from "react";
-import Table from "@mui/material/Table";
-import TableHead from "@mui/material/TableHead";
-import TableBody from "@mui/material/TableBody";
-import TableRow from "@mui/material/TableRow";
-import TableCell from "@mui/material/TableCell";
-import { AppLayout } from "../../layouts";
+import { useEffect, useContext, useState } from "react";
+import { Button } from "@mui/material";
 import { KidInterface, RegisterKidAppInterfaceContext } from "../../interfaces";
-import { getYearOldKid } from "../../helpers";
-import { useKidRegister } from "../../hooks";
 import { RegisterKidAppContext } from "../../contexts";
-import { Button, ButtonGroup } from "@mui/material";
-import { ModalRegisterKid } from "../../components/ModalRegisterKid";
-import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
-import QrCodeIcon from "@mui/icons-material/QrCode";
-import DeleteIcon from "@mui/icons-material/Delete";
-import { ModalShowQrKid } from "../../components";
+import { useKidRegister } from "../../hooks";
+import { AppLayout } from "../../layouts";
+import {
+  ModalShowQrKid,
+  TableReporterRegisterKids,
+  ModalRegisterKid,
+  ModalEditKid,
+} from "../../components";
 
 export const ListKidPage = () => {
   const { listAllKids, removeKid } = useKidRegister();
@@ -24,6 +19,12 @@ export const ListKidPage = () => {
   }>({
     Kid: null,
     open: false,
+  });
+
+  const [dataModalEditKid, setDataModalEditKid] = useState<{
+    kid: KidInterface | null;
+  }>({
+    kid: null,
   });
   const {
     setListQueryKids,
@@ -45,7 +46,14 @@ export const ListKidPage = () => {
 
   const handleRemoveKid = async (kidId: number) => {
     await removeKid(kidId);
-    await listAllKids();
+    await onUpdateTableKids();
+  };
+
+  const onEditKid = async (kid: KidInterface) => {
+    setGonnaRegisterNewKid(true);
+    setDataModalEditKid({
+      kid,
+    });
   };
 
   const handleShowQr = (Kid: KidInterface) => {
@@ -58,9 +66,12 @@ export const ListKidPage = () => {
   return (
     <AppLayout>
       <ModalShowQrKid
-        handleCloseModal={() => setDataModalQr({open: false, Kid: null})}
+        handleCloseModal={() => setDataModalQr({ open: false, Kid: null })}
         {...dataModalQr}
       />
+
+      <ModalEditKid {...dataModalEditKid} />
+
       <ModalRegisterKid
         open={gonnaRegisterNewKid}
         onNewKidSuccess={onUpdateTableKids}
@@ -74,65 +85,15 @@ export const ListKidPage = () => {
       >
         Registrar Niño(a)
       </Button>
-      <Table>
-        <TableHead>
-          <TableRow>
-            <TableCell>
-              <span className="font-bold"> Identificación del niño(a)</span>
-            </TableCell>
-            <TableCell>
-              <span className="font-bold"> Niño</span>
-            </TableCell>
-            <TableCell>
-              <span className="font-bold">Edad</span>
-            </TableCell>
-            <TableCell>
-              <span className="font-bold"> Padre</span>
-            </TableCell>
-            <TableCell>
-              <span className="font-bold"> Contacto</span>
-            </TableCell>
-            <TableCell>
-              <span className="font-bold"> Acción</span>
-            </TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {kids.map((kid: KidInterface, key: Key) => (
-            <TableRow key={key}>
-              <TableCell>{`${kid.identification}`}</TableCell>
-              <TableCell>{`${kid.name} ${kid.lastname}`}</TableCell>
-              <TableCell>{` ${getYearOldKid(
-                kid.date_born
-              )} año(s) `}</TableCell>
-              <TableCell>{` ${kid.parent_name} ${kid.parent_lastname} `}</TableCell>
-              <TableCell>{` ${kid.parent_phone} / ${kid.parent_email} `}</TableCell>
-              <TableCell>
-                <ButtonGroup size="small">
-                  <Button title="Ver">
-                    <RemoveRedEyeIcon />
-                  </Button>
-                  <Button
-                    title="Ver/Generar QR"
-                    variant="contained"
-                    color="success"
-                    onClick={() => handleShowQr(kid)}
-                  >
-                    <QrCodeIcon />
-                  </Button>
-                  <Button
-                    variant="outlined"
-                    color="warning"
-                    onClick={() => handleRemoveKid(kid.id as number)}
-                  >
-                    <DeleteIcon />
-                  </Button>
-                </ButtonGroup>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+
+      <TableReporterRegisterKids
+        kids={kids}
+        onAction={{
+          onShowQrKids: handleShowQr,
+          onRemoveKids: handleRemoveKid,
+          onEditKid,
+        }}
+      />
     </AppLayout>
   );
 };
