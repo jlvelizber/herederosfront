@@ -53,9 +53,15 @@ export const TableReporterRegisterKids: FC<{
           <TableRow key={key}>
             <TableCell>{`${kid.identification}`}</TableCell>
             <TableCell>{`${kid.name} ${kid.lastname}`}</TableCell>
-            <TableCell>{` ${getYearOldKid(kid.date_born)} año(s) `}</TableCell>
+            <TableCell>
+              {kid.date_born
+                ? ` ${getYearOldKid(kid.date_born)} año(s) `
+                : "No registrada"}
+            </TableCell>
             <TableCell>{` ${kid.parent_name} ${kid.parent_lastname} `}</TableCell>
-            <TableCell>{` ${kid.parent_phone} / ${kid.parent_email} `}</TableCell>
+            <TableCell>{` ${kid.parent_phone}  ${
+              kid.parent_email ? `/${kid.parent_email}` : ""
+            } `}</TableCell>
             {onAction && (
               <TableCell>
                 <ButtonGroup size="small">

@@ -23,14 +23,17 @@ export const ListKidPage = () => {
 
   const [dataModalEditKid, setDataModalEditKid] = useState<{
     kid: KidInterface | null;
+    title: string;
   }>({
     kid: null,
+    title: "",
   });
   const {
     setListQueryKids,
     listQueryKids: kids,
     gonnaRegisterNewKid,
     setGonnaRegisterNewKid,
+    setGonnaEditKid,
   } = useContext(RegisterKidAppContext) as RegisterKidAppInterfaceContext;
 
   useEffect(() => {
@@ -50,9 +53,10 @@ export const ListKidPage = () => {
   };
 
   const onEditKid = async (kid: KidInterface) => {
-    setGonnaRegisterNewKid(true);
+    setGonnaEditKid(true);
     setDataModalEditKid({
       kid,
+      title: "Edición de niños",
     });
   };
 
@@ -70,11 +74,15 @@ export const ListKidPage = () => {
         {...dataModalQr}
       />
 
-      <ModalEditKid {...dataModalEditKid} />
+      <ModalEditKid
+        {...dataModalEditKid}
+        onSuccessUpdatedKid={onUpdateTableKids}
+      />
 
       <ModalRegisterKid
         open={gonnaRegisterNewKid}
         onNewKidSuccess={onUpdateTableKids}
+        titleModal="Registro de niño"
       />
       <Button
         variant="contained"

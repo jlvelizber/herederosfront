@@ -118,8 +118,8 @@ export const useKidRegister = () => {
   };
   const updateKid = async (kidData: KidInterface) => {
     try {
-      const { data }: AxiosResponse<KidInterface> = await RegisterApi.post(
-        `kids`,
+      const { data }: AxiosResponse<KidInterface> = await RegisterApi.put(
+        `kids/${kidData.id}`,
         kidData
       );
 

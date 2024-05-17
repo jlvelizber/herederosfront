@@ -60,6 +60,8 @@ export const RegisterKidAppProvider: FC<{ children: ReactNode }> = ({
   const [gonnaRegisterNewKid, setGonnaRegisterNewKid] =
     useState<boolean>(false);
 
+  const [gonnaEditKid, setGonnaEditKid] = useState<boolean>(false);
+
   const addKIdToRegisterKids = (kid: KidInterface) => {
     setListRegisterKids((prevState) => [...prevState, kid]);
   };
@@ -113,6 +115,8 @@ export const RegisterKidAppProvider: FC<{ children: ReactNode }> = ({
         setErrorsFormRegisterKid,
         errorsFromRegisterKidAsistance,
         setErrorsFromRegisterKidAsistance,
+        setGonnaEditKid,
+        gonnaEditKid,
       }}
     >
       {children}

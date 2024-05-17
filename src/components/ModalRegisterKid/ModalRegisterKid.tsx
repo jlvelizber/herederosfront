@@ -30,12 +30,12 @@ const style = {
 
 export const ModalRegisterKid: FC<{
   open: boolean;
-  titleModal?: string;
+  titleModal: string;
   onNewKidSuccess: (kid: KidInterface) => void;
   kid?: KidInterface;
 }> = ({ open, onNewKidSuccess, titleModal, kid }) => {
   const { saveNewKid, errorsFormRegisterKid, updateKid } = useKidRegister();
-  const { setGonnaRegisterNewKid, setErrorsFormRegisterKid } = useContext(
+  const { setGonnaRegisterNewKid, setErrorsFormRegisterKid, setGonnaEditKid } = useContext(
     RegisterKidAppContext
   ) as RegisterKidAppInterfaceContext;
 
@@ -48,6 +48,7 @@ export const ModalRegisterKid: FC<{
     parent_lastname: kid?.parent_lastname || "",
     parent_email: kid?.parent_email || "",
     parent_phone: kid?.parent_phone || "",
+    id: kid?.id || "",
   });
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -57,6 +58,7 @@ export const ModalRegisterKid: FC<{
 
   const handleCloseModal = () => {
     setGonnaRegisterNewKid(false);
+    setGonnaEditKid(false);
   };
 
   const handleSaveNewKid = async (e: FormEvent<HTMLFormElement>) => {
@@ -75,7 +77,7 @@ export const ModalRegisterKid: FC<{
   const handleUpdaKid = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     e.stopPropagation();
-
+   
     const kidSaved = await updateKid(formData);
 
     if (kidSaved) {
@@ -105,9 +107,7 @@ export const ModalRegisterKid: FC<{
             }}
           >
             <form onSubmit={kid?.id ? handleUpdaKid : handleSaveNewKid}>
-              <h1 className="font-bold">
-                {titleModal || "Registro de nuevo Niño(a)"}
-              </h1>
+              <h1 className="font-bold">{titleModal}</h1>
               <Box className="py-2">
                 <Grid container spacing={1}>
                   <Grid item xs={6}>
@@ -136,7 +136,7 @@ export const ModalRegisterKid: FC<{
                       onChange={handleInputChange}
                       error={errorsFormRegisterKid?.name ? true : false}
                       helperText={errorsFormRegisterKid?.name}
-                      value={formData.name || ''}
+                      value={formData.name}
                     />
                   </Grid>
                   <Grid item xs={6}>
@@ -149,6 +149,7 @@ export const ModalRegisterKid: FC<{
                       onChange={handleInputChange}
                       error={errorsFormRegisterKid?.lastname ? true : false}
                       helperText={errorsFormRegisterKid?.lastname}
+                      value={formData.lastname}
                     />
                   </Grid>
                   <Grid item xs={6}>
@@ -164,6 +165,7 @@ export const ModalRegisterKid: FC<{
                       onChange={handleInputChange}
                       error={errorsFormRegisterKid?.date_born ? true : false}
                       helperText={errorsFormRegisterKid?.date_born}
+                      value={formData.date_born}
                     />
                   </Grid>
                   <Grid item xs={6}>
@@ -176,6 +178,7 @@ export const ModalRegisterKid: FC<{
                       onChange={handleInputChange}
                       error={errorsFormRegisterKid?.parent_name ? true : false}
                       helperText={errorsFormRegisterKid?.parent_name}
+                      value={formData.parent_name}
                     />
                   </Grid>
                   <Grid item xs={6}>
@@ -190,6 +193,7 @@ export const ModalRegisterKid: FC<{
                         errorsFormRegisterKid?.parent_lastname ? true : false
                       }
                       helperText={errorsFormRegisterKid?.parent_lastname}
+                       value={formData.parent_lastname}
                     />
                   </Grid>
                   <Grid item xs={6}>
@@ -202,6 +206,7 @@ export const ModalRegisterKid: FC<{
                       onChange={handleInputChange}
                       error={errorsFormRegisterKid?.parent_email ? true : false}
                       helperText={errorsFormRegisterKid?.parent_email}
+                       value={formData.parent_email}
                     />
                   </Grid>
                   <Grid item xs={6}>
@@ -214,6 +219,7 @@ export const ModalRegisterKid: FC<{
                       onChange={handleInputChange}
                       error={errorsFormRegisterKid?.parent_phone ? true : false}
                       helperText={errorsFormRegisterKid?.parent_phone}
+                       value={formData.parent_phone}
                     />
                   </Grid>
                 </Grid>

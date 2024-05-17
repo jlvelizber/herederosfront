@@ -1,19 +1,25 @@
 import { FC, useContext } from "react";
-import { ModalRegisterKid } from "../ModalRegisterKid";
+import { ModalRegisterKid } from "../";
 import { KidInterface, RegisterKidAppInterfaceContext } from "../../interfaces";
 import { RegisterKidAppContext } from "../../contexts";
 
-export const ModalEditKid: FC<{ kid: KidInterface | null }> = ({ kid }) => {
-  const { gonnaRegisterNewKid } = useContext(
+export const ModalEditKid: FC<{ kid: KidInterface | null; title: string; onSuccessUpdatedKid: () => void }> = ({
+  kid,
+  title,
+  onSuccessUpdatedKid
+}) => {
+  const { gonnaEditKid } = useContext(
     RegisterKidAppContext
   ) as RegisterKidAppInterfaceContext;
 
   return (
-    <ModalRegisterKid
-      open={gonnaRegisterNewKid}
-      kid={kid as KidInterface}
-      onNewKidSuccess={() => {}}
-      titleModal="Editar niño"
-    />
+    gonnaEditKid && (
+      <ModalRegisterKid
+        open={gonnaEditKid}
+        kid={kid as KidInterface}
+        onNewKidSuccess={onSuccessUpdatedKid}
+        titleModal={title}
+      />
+    )
   );
 };
