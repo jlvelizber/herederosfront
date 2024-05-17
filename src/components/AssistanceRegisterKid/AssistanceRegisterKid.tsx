@@ -86,6 +86,7 @@ export const AssistanceRegisterKid:FC = () => {
       <ModalRegisterKid
         open={gonnaRegisterNewKid}
         onNewKidSuccess={onHandleRegisterKid}
+        titleModal="Registro de Niños"
       />
 
       {/* Listado de asistencia */}
