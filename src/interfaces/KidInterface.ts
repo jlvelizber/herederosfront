@@ -9,4 +9,5 @@ export interface KidInterface {
   parent_email: string;
   parent_phone: string;
   qr?: string;
+  address?: string;
 }

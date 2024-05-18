@@ -49,6 +49,7 @@ export const ModalRegisterKid: FC<{
     parent_email: kid?.parent_email || "",
     parent_phone: kid?.parent_phone || "",
     id: kid?.id || "",
+    address: kid?.address || "",
   });
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -220,6 +221,19 @@ export const ModalRegisterKid: FC<{
                       error={errorsFormRegisterKid?.parent_phone ? true : false}
                       helperText={errorsFormRegisterKid?.parent_phone}
                        value={formData.parent_phone}
+                    />
+                  </Grid>
+                  <Grid item xs={12}>
+                    <TextField
+                      name="address"
+                      label="Dirección"
+                      variant="outlined"
+                      fullWidth
+                      margin="normal"
+                      onChange={handleInputChange}
+                      error={errorsFormRegisterKid?.address ? true : false}
+                      helperText={errorsFormRegisterKid?.address}
+                       value={formData.address}
                     />
                   </Grid>
                 </Grid>
