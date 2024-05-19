@@ -40,9 +40,13 @@ export const TableListAssistanceKids: FC<{
       <TableBody>
         {kids.map((kid: KidInterface, key: Key) => (
           <TableRow key={key}>
-            <TableCell>{`${key as number + 1}`}</TableCell>
+            <TableCell>{`${(key as number) + 1}`}</TableCell>
             <TableCell>{`${kid.name} ${kid.lastname}`}</TableCell>
-            <TableCell>{` ${getYearOldKid(kid.date_born)} año(s) `}</TableCell>
+            <TableCell>
+              {kid.date_born
+                ? ` ${getYearOldKid(kid.date_born)} año(s) `
+                : "No registrado"}
+            </TableCell>
             <TableCell>{` ${kid.parent_name} ${kid.parent_lastname} `}</TableCell>
             <TableCell>
               <Button

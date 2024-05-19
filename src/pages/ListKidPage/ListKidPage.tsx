@@ -4,11 +4,13 @@ import { KidInterface, RegisterKidAppInterfaceContext } from "../../interfaces";
 import { RegisterKidAppContext } from "../../contexts";
 import { useKidRegister } from "../../hooks";
 import { AppLayout } from "../../layouts";
+
 import {
   ModalShowQrKid,
   TableReporterRegisterKids,
   ModalRegisterKid,
   ModalEditKid,
+  SeekerKidBar,
 } from "../../components";
 
 export const ListKidPage = () => {
@@ -67,6 +69,21 @@ export const ListKidPage = () => {
     });
   };
 
+  const handleFindKid = async (query: string) => {
+    if (!query) {
+      await listAllKids();
+      return;
+    }
+    query = String(query).toLowerCase();
+    const copyListKids: KidInterface[] = [...kids];
+    const kidsFiltered = copyListKids.filter(({ ...rest }: KidInterface) =>
+      Object.values(rest).some((val) =>
+        String(val).toLowerCase().includes(query)
+      )
+    );
+    setListQueryKids(kidsFiltered);
+  };
+
   return (
     <AppLayout>
       <ModalShowQrKid
@@ -93,6 +110,8 @@ export const ListKidPage = () => {
       >
         Registrar Niño(a)
       </Button>
+
+      <SeekerKidBar onPressSeeker={handleFindKid} />
 
       <TableReporterRegisterKids
         kids={kids}

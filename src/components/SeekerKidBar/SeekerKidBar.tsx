@@ -1,9 +1,9 @@
-import { useState, ChangeEvent, KeyboardEvent } from "react";
+import { useState, ChangeEvent, KeyboardEvent, FC } from "react";
 import { TextField } from "@mui/material";
-import { useKidRegister } from "../../hooks";
 
-export const SeekerKidBar = () => {
-  const { findKids } = useKidRegister();
+export const SeekerKidBar: FC<{
+  onPressSeeker: (valueEnter: string) => void;
+}> = ({ onPressSeeker }) => {
   const [valueSeeker, setValueSeeker] = useState<string>("");
 
   const handleChangeValue = (e: ChangeEvent<HTMLInputElement>) => {
@@ -15,7 +15,8 @@ export const SeekerKidBar = () => {
     if (event.keyCode === 13) {
       event.preventDefault();
       event.stopPropagation();
-      await findKids(valueSeeker);
+      // await findKids(valueSeeker);
+      onPressSeeker(valueSeeker);
     }
   };
 

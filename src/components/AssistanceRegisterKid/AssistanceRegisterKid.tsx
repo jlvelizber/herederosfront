@@ -28,7 +28,7 @@ export const AssistanceRegisterKid:FC = () => {
     addKIdToRegisterKids,
   } = useContext(RegisterKidAppContext) as RegisterKidAppInterfaceContext;
 
-  const { loadRegisterOpened, removeKidFromRegister, saveRegisterKid } =
+  const { loadRegisterOpened, removeKidFromRegister, saveRegisterKid, findKids } =
     useKidRegister();
 
   useEffect(() => {
@@ -63,13 +63,17 @@ export const AssistanceRegisterKid:FC = () => {
     }
   };
 
+  const handleFinKids = async (valueSeeker: string) =>
+    await findKids(valueSeeker);
+
   return (
     <>
       <InfoRegisterCampusSelected />
 
       <QRScanner />
 
-      <SeekerKidBar />
+      <SeekerKidBar onPressSeeker={handleFinKids} />
+
 
       <ModalDataKidResults
         open={existAnyResultQueryKids}
