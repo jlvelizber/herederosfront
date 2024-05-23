@@ -99,6 +99,7 @@ export const useKidRegister = () => {
 
   const saveNewKid = async (kidData: KidInterface) => {
     try {
+      delete kidData.id;
       const { data }: AxiosResponse<KidInterface> = await RegisterApi.post(
         `kids`,
         kidData
