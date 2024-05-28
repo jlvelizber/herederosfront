@@ -8,18 +8,6 @@ import { TableListAssistanceKids } from "..";
 import { useKidRegister } from "../../hooks";
 import { Button } from "@mui/material";
 
-const style = {
-  position: "absolute",
-  top: "40%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 600,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
-
 export const ModalDataKidResults: FC<{
   open: boolean;
   kids: KidInterface[];
@@ -61,7 +49,7 @@ export const ModalDataKidResults: FC<{
 
   return (
     <Modal open={open} onClose={handleCloseModal}>
-      <Box sx={style}>
+      <Box className='modal'>
         <Box sx={{ float: "right", padding: 0, cursor: "pointer" }}>
           <CloseIcon onClick={handleCloseModal} />
         </Box>

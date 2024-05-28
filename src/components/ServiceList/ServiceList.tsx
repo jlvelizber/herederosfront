@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import ButtonGroup from "@mui/material/ButtonGroup";
+import { ButtonGroup } from "@mui/material";
 import {
   CampusServicesInterface,
   RegisterKidAppInterfaceContext,
@@ -14,7 +14,7 @@ export const ServiceList = () => {
 
   return (
     <div className="w-full flex justify-around py-3">
-      <ButtonGroup size="large" aria-label="large button group">
+      <ButtonGroup size="large" aria-label="large button group" classes={{ root: 'w-full' }}>
         {listServices?.map((service: CampusServicesInterface, key: number) => (
           <CampusServiceListItem service={service} key={key} />
         ))}
