@@ -96,7 +96,7 @@ export const ModalRegisterKid: FC<{
           >
             <form onSubmit={kid?.id ? handleUpdaKid : handleSaveNewKid}>
               <h1 className="font-bold">{titleModal}</h1>
-              <Box className="py-2">
+              <Box className="py-2 overflow-y-auto md:overflow-hidden">
                 <Grid container spacing={1}>
                   <Grid item xs={12} md={6}>
                     <TextField
