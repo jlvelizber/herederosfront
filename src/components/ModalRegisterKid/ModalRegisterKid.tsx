@@ -1,20 +1,33 @@
-import {
-  FC,
-  useContext,
-  useState,
-  ChangeEvent,
-  FormEvent,
-  useEffect,
-} from "react";
-import { KidInterface, RegisterKidAppInterfaceContext } from "../../interfaces";
-import Modal from "@mui/material/Modal";
-import Box from "@mui/material/Box";
-import TextField from "@mui/material/TextField";
-import Grid from "@mui/material/Grid";
 import CloseIcon from "@mui/icons-material/Close";
+import { Button } from "@mui/material";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import Modal from "@mui/material/Modal";
+import TextField from "@mui/material/TextField";
+import {
+  ChangeEvent,
+  FC,
+  FormEvent,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { RegisterKidAppContext } from "../../contexts";
 import { useKidRegister } from "../../hooks";
-import { Button } from "@mui/material";
+import { KidInterface, RegisterKidAppInterfaceContext } from "../../interfaces";
+
+const defaulKidValues: KidInterface  = {
+  identification: "",
+  name: "",
+  lastname: "",
+  date_born: "",
+  parent_name: "",
+  parent_lastname: "",
+  parent_email: "",
+  parent_phone: "",
+  id: "",
+  address: "",
+} 
 
 export const ModalRegisterKid: FC<{
   open: boolean;
@@ -47,6 +60,8 @@ export const ModalRegisterKid: FC<{
   const handleCloseModal = () => {
     setGonnaRegisterNewKid(false);
     setGonnaEditKid(false);
+    setFormData(defaulKidValues);
+    setErrorsFormRegisterKid(null);
   };
 
   const handleSaveNewKid = async (e: FormEvent<HTMLFormElement>) => {
