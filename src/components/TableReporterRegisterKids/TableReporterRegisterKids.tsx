@@ -28,6 +28,9 @@ export const TableReporterRegisterKids: FC<{
         <TableHead>
           <TableRow>
             <TableCell>
+              <span className="font-bold"> N.</span>
+            </TableCell>
+            <TableCell>
               <span className="font-bold"> Identificación del niño(a)</span>
             </TableCell>
             <TableCell>
@@ -52,6 +55,7 @@ export const TableReporterRegisterKids: FC<{
         <TableBody>
           {kids.map((kid: KidInterface, key: Key) => (
             <TableRow key={key}>
+              <TableCell>{(key as number + 1)}</TableCell>
               <TableCell>{`${kid.identification}`}</TableCell>
               <TableCell>{`${kid.name} ${kid.lastname}`}</TableCell>
               <TableCell>
@@ -60,9 +64,8 @@ export const TableReporterRegisterKids: FC<{
                   : "No registrada"}
               </TableCell>
               <TableCell>{` ${kid.parent_name} ${kid.parent_lastname} `}</TableCell>
-              <TableCell>{` ${kid.parent_phone}  ${
-                kid.parent_email ? `/${kid.parent_email}` : ""
-              } `}</TableCell>
+              <TableCell>{` ${kid.parent_phone}  ${kid.parent_email ? `/${kid.parent_email}` : ""
+                } `}</TableCell>
               {onAction && (
                 <TableCell>
                   <ButtonGroup size="small">
