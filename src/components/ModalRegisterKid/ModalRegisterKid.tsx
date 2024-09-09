@@ -54,7 +54,7 @@ export const ModalRegisterKid: FC<{
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData({ ...formData, [name]: value.toUpperCase() });
   };
 
   const handleCloseModal = () => {
@@ -109,7 +109,7 @@ export const ModalRegisterKid: FC<{
               textAlign: "center",
             }}
           >
-            <form onSubmit={kid?.id ? handleUpdaKid : handleSaveNewKid}>
+            <form onSubmit={kid?.id ? handleUpdaKid : handleSaveNewKid} autoComplete="false">
               <h1 className="font-bold">{titleModal}</h1>
               <Box className="py-2 overflow-y-auto md:overflow-hidden">
                 <Grid container spacing={1}>
@@ -126,6 +126,7 @@ export const ModalRegisterKid: FC<{
                       }
                       helperText={errorsFormRegisterKid?.identification}
                       value={formData.identification}
+                      autoComplete="false"
                     />
                   </Grid>
 
@@ -140,6 +141,7 @@ export const ModalRegisterKid: FC<{
                       error={errorsFormRegisterKid?.name ? true : false}
                       helperText={errorsFormRegisterKid?.name}
                       value={formData.name}
+                      autoComplete="false"
                     />
                   </Grid>
                   <Grid item xs={12} md={6}>
@@ -153,6 +155,7 @@ export const ModalRegisterKid: FC<{
                       error={errorsFormRegisterKid?.lastname ? true : false}
                       helperText={errorsFormRegisterKid?.lastname}
                       value={formData.lastname}
+                      autoComplete="false"
                     />
                   </Grid>
                   <Grid item xs={12} md={6}>
@@ -169,6 +172,7 @@ export const ModalRegisterKid: FC<{
                       error={errorsFormRegisterKid?.date_born ? true : false}
                       helperText={errorsFormRegisterKid?.date_born}
                       value={formData.date_born}
+                      autoComplete="false"
                     />
                   </Grid>
                   <Grid item xs={12} md={6}>
@@ -182,6 +186,7 @@ export const ModalRegisterKid: FC<{
                       error={errorsFormRegisterKid?.parent_name ? true : false}
                       helperText={errorsFormRegisterKid?.parent_name}
                       value={formData.parent_name}
+                      autoComplete="false"
                     />
                   </Grid>
                   <Grid item xs={12} md={6}>
@@ -197,6 +202,7 @@ export const ModalRegisterKid: FC<{
                       }
                       helperText={errorsFormRegisterKid?.parent_lastname}
                       value={formData.parent_lastname}
+                      autoComplete="false"
                     />
                   </Grid>
                   <Grid item xs={12} md={6}>
@@ -210,6 +216,7 @@ export const ModalRegisterKid: FC<{
                       error={errorsFormRegisterKid?.parent_email ? true : false}
                       helperText={errorsFormRegisterKid?.parent_email}
                       value={formData.parent_email}
+                      autoComplete="false"
                     />
                   </Grid>
                   <Grid item xs={12} md={6}>
@@ -223,6 +230,7 @@ export const ModalRegisterKid: FC<{
                       error={errorsFormRegisterKid?.parent_phone ? true : false}
                       helperText={errorsFormRegisterKid?.parent_phone}
                       value={formData.parent_phone}
+                      autoComplete="false"
                     />
                   </Grid>
                   <Grid item xs={12}>
@@ -236,6 +244,7 @@ export const ModalRegisterKid: FC<{
                       error={errorsFormRegisterKid?.address ? true : false}
                       helperText={errorsFormRegisterKid?.address}
                       value={formData.address}
+                      autoComplete="false"
                     />
                   </Grid>
                 </Grid>

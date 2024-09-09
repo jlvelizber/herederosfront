@@ -7,7 +7,7 @@ export const SeekerKidBar: FC<{
   const [valueSeeker, setValueSeeker] = useState<string>("");
 
   const handleChangeValue = (e: ChangeEvent<HTMLInputElement>) => {
-    setValueSeeker(e.target.value);
+    setValueSeeker(e.target.value.toUpperCase());
     // console.log(e.target.value);
   };
 
