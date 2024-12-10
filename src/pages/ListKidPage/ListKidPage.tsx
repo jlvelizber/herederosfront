@@ -1,5 +1,6 @@
 import { useEffect, useContext, useState } from "react";
-import { Button } from "@mui/material";
+import { Button, Select, MenuItem, InputLabel, FormControl, SelectChangeEvent } from "@mui/material";
+import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import { KidInterface, RegisterKidAppInterfaceContext } from "../../interfaces";
 import { RegisterKidAppContext } from "../../contexts";
 import { useKidRegister } from "../../hooks";
@@ -14,7 +15,13 @@ import {
 } from "../../components";
 
 export const ListKidPage = () => {
-  const { listAllKids, removeKid } = useKidRegister();
+  const { listAllKids, removeKid, downloadResultList } = useKidRegister();
+  const [selectedCampus, setSelectedCampus] = useState<string>("all");
+
+  // Estado para manejar la paginación
+  const [page, setPage] = useState<number>(0);
+  const [rowsPerPage, setRowsPerPage] = useState<number>(5);
+
   const [dataModalQr, setDataModalQr] = useState<{
     open: boolean;
     Kid: KidInterface | null;
@@ -30,6 +37,7 @@ export const ListKidPage = () => {
     kid: null,
     title: "",
   });
+
   const {
     setListQueryKids,
     listQueryKids: kids,
@@ -84,6 +92,29 @@ export const ListKidPage = () => {
     setListQueryKids(kidsFiltered);
   };
 
+  const handleFilterByCampus = async (event: SelectChangeEvent<string>) => {
+    const campus = event.target.value;
+    setSelectedCampus(campus);
+    await listAllKids(campus);
+  };
+
+  // Funciones para manejar la paginación
+  const handleChangePage = (_: unknown, newPage: number) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
+  const handleExportToExcel = async () => {
+    if (selectedCampus !== "all") {
+      await downloadResultList(Number(selectedCampus));
+    }
+  };
+
+
   return (
     <AppLayout>
       <ModalShowQrKid
@@ -101,6 +132,7 @@ export const ListKidPage = () => {
         onNewKidSuccess={onUpdateTableKids}
         titleModal="Registro de niño"
       />
+
       <Button
         variant="contained"
         color="primary"
@@ -111,6 +143,15 @@ export const ListKidPage = () => {
         Registrar Niño(a)
       </Button>
 
+      <FormControl fullWidth margin="normal">
+        <InputLabel>Filtrar por Campus</InputLabel>
+        <Select value={selectedCampus} onChange={handleFilterByCampus}>
+          <MenuItem value="all">Todos</MenuItem>
+          <MenuItem value={1}>Campus Norte</MenuItem>
+          <MenuItem value={2}>Campus Sur</MenuItem>
+        </Select>
+      </FormControl>
+
       <SeekerKidBar onPressSeeker={handleFindKid} />
 
       <TableReporterRegisterKids
@@ -120,7 +161,25 @@ export const ListKidPage = () => {
           onRemoveKids: handleRemoveKid,
           onEditKid,
         }}
+        page={page}
+        rowsPerPage={rowsPerPage}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
       />
+
+      {/* Mostrar el botón solo si se ha seleccionado un campus específico */}
+      {selectedCampus !== "all" && (
+        <Button
+          variant="contained"
+          fullWidth
+          size="large"
+          onClick={handleExportToExcel}
+          color="success"
+          style={{ marginTop: "1rem" }}
+        >
+          <FileDownloadIcon /> Exportar a Excel
+        </Button>
+      )}
     </AppLayout>
   );
 };

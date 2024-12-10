@@ -1,4 +1,4 @@
-import { useEffect, useContext, useState } from "react";
+import { useEffect, useContext, useState, ChangeEvent } from "react";
 import Button from "@mui/material/Button";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import { AppLayout } from "../../layouts";
@@ -21,17 +21,32 @@ export const ReporterPage = () => {
     service: "",
   });
 
+  // Estados para la paginación
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+
   useEffect(() => {
     return () => {
       setListQueryKids([]);
     };
-  }, []);
+  }, [setListQueryKids]);
 
   const exportReporterKids = async () => {
     setExporting(true);
     const { service, date } = filters;
     await downloadResultReport(service, date);
     setExporting(false);
+  };
+
+  // Manejar cambio de página
+  const handleChangePage = (_: unknown, newPage: number) => {
+    setPage(newPage);
+  };
+
+  // Manejar cambio de filas por página
+  const handleChangeRowsPerPage = (event: ChangeEvent<HTMLInputElement>) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
   };
 
   return (
@@ -43,7 +58,13 @@ export const ReporterPage = () => {
       />
       {kids.length > 0 && (
         <>
-          <TableReporterRegisterKids kids={kids} />
+          <TableReporterRegisterKids
+            kids={kids}
+            page={page}
+            rowsPerPage={rowsPerPage}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
           <Button
             variant="contained"
             fullWidth

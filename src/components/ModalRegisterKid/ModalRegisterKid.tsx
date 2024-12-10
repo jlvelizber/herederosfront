@@ -15,8 +15,9 @@ import {
 import { RegisterKidAppContext } from "../../contexts";
 import { useKidRegister } from "../../hooks";
 import { KidInterface, RegisterKidAppInterfaceContext } from "../../interfaces";
+import { Select, MenuItem, InputLabel, FormControl } from "@mui/material";
 
-const defaulKidValues: KidInterface  = {
+const defaulKidValues: KidInterface = {
   identification: "",
   name: "",
   lastname: "",
@@ -27,7 +28,8 @@ const defaulKidValues: KidInterface  = {
   parent_phone: "",
   id: "",
   address: "",
-} 
+  campus: "",
+}
 
 export const ModalRegisterKid: FC<{
   open: boolean;
@@ -50,6 +52,7 @@ export const ModalRegisterKid: FC<{
     parent_phone: kid?.parent_phone || "",
     id: kid?.id || "",
     address: kid?.address || "",
+    campus: kid?.campus || "",
   });
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -246,6 +249,20 @@ export const ModalRegisterKid: FC<{
                       value={formData.address}
                       autoComplete="false"
                     />
+                  </Grid>
+                  <Grid item xs={12} md={6}>
+                    <FormControl fullWidth margin="normal">
+                      <InputLabel id="campus-label">Campus</InputLabel>
+                      <Select
+                        labelId="campus-label"
+                        name="campus"
+                        value={formData.campus}
+                        onChange={(event) => setFormData({ ...formData, campus: event.target.value })}
+                      >
+                        <MenuItem value={1}>Campus Norte</MenuItem>
+                        <MenuItem value={2}>Campus Sur</MenuItem>
+                      </Select>
+                    </FormControl>
                   </Grid>
                 </Grid>
                 <Box className="flex justify-around">

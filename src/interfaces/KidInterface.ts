@@ -10,4 +10,5 @@ export interface KidInterface {
   parent_phone: string;
   qr?: string;
   address?: string;
+  campus: string;
 }

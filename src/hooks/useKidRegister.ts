@@ -137,11 +137,41 @@ export const useKidRegister = () => {
     }
   };
 
-  const listAllKids = async () => {
-    const { data }: AxiosResponse<KidInterface[]> = await RegisterApi.get(
-      `kids`
-    );
-    setListQueryKids(data);
+  // const listAllKids = async () => {
+  //   const { data }: AxiosResponse<KidInterface[]> = await RegisterApi.get(
+  //     `kids`
+  //   );
+  //   setListQueryKids(data);
+  // };
+
+  const listAllKids = async (campus: string | number = "all") => {
+    try {
+      const { data }: AxiosResponse<KidInterface[]> = await RegisterApi.get(`kids`);
+      // console.log("Datos recibidos:", data);
+
+      // Imprimir el primer registro para ver su estructura
+      // if (data.length > 0) {
+      //   console.log("Primer registro recibido:", data[0]);
+      // }
+      // console.log("Valor del campus seleccionado:", campus);
+
+      // Convertir campus a número solo si no es "all"
+      const campusNumber = campus === "all" ? "all" : Number(campus);
+      // console.log("campus a número:", campusNumber);
+
+      // Imprimir los valores de kid.campus para cada registro
+      // data.forEach((kid) => {
+      //   console.log(`Kid: ${kid.name}, Campus en la tabla:`, kid.campus);
+      // });
+
+      // Filtrar solo si se selecciona un campus específico
+      const filteredData = campus === "all" ? data : data.filter((kid) => kid.campus === campusNumber);
+      // console.log("Datos filtrados:", filteredData);
+
+      setListQueryKids(filteredData);
+    } catch (error) {
+      console.error("Error al obtener la lista de niños:", error);
+    }
   };
 
   const removeKid = async (kidId: number) => {
@@ -198,6 +228,34 @@ export const useKidRegister = () => {
     }
   };
 
+  const downloadResultList = async (campusId: number) => {
+    try {
+      const response = await RegisterApi.post(
+        `kids/export/${campusId}`,
+        {},
+        { responseType: "blob" } // Indicar que esperamos un archivo blob
+      );
+
+      // console.log("Respuesta del servidor:", response);
+
+      // Determinar el nombre del campus según el campusId
+      const campusName = campusId === 1 ? "norte" : campusId === 2 ? "sur" : "";
+
+      const href = window.URL.createObjectURL(response.data);
+      const anchorElement = document.createElement("a");
+      anchorElement.href = href;
+      anchorElement.download = `herederos_listado_por_campus_${campusName}.xlsx`;
+
+      document.body.appendChild(anchorElement);
+      anchorElement.click();
+
+      document.body.removeChild(anchorElement);
+      window.URL.revokeObjectURL(href);
+    } catch (error) {
+      console.error("Error al descargar el reporte:", error);
+    }
+  };
+
   return {
     findKids,
     saveRegisterKid,
@@ -209,6 +267,7 @@ export const useKidRegister = () => {
     listtKidsReporterFromDate,
     errorsFormRegisterKid,
     downloadResultReport,
+    downloadResultList,
     removeKid
   };
 };
